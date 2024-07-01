@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  default:
+    image: image-fetch
+    container_name: image-fetch
+    volumes:
+      - ./data:/app/data

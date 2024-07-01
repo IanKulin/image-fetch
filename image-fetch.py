@@ -1,5 +1,4 @@
 # download an image from the internet
-# (https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png)
 # then save it to the './data' directory in the current working directory
 
 import requests
