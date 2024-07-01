@@ -7,11 +7,23 @@ WORKDIR /app
 # Create the /app/data directory
 RUN mkdir -p /app/data
 
-# Copy the current directory contents into the container at /app
-ADD . /app
+# Install cron
+RUN apk add --no-cache cronie
+
+# Set the username for cron to use when executing tasks (replace "myuser" with your actual username)
+USER root:root
+
+# Create a file to hold the Cron job configuration (e.g., crontab.conf)
+COPY crontab.conf /etc/crontabs/root
+
+# copy the python requirements in
+ADD requirements.txt /app
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Run image-fetch.py when the container launches
-CMD ["python", "image-fetch.py"]
+# copy the python code file into the container at /app
+ADD image-fetch.py /app
+
+# Start the cron daemon
+CMD ["crond", "-f"]
